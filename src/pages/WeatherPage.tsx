@@ -4,29 +4,39 @@ import Card from "../components/Card";
 
 const WeatherPage: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>(null);
+  const [forecastData, setForecastData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [forecastType, setForecastType] = useState<"hours" | "days">("hours"); // default hours
 
   const API_KEY = "473b77d656249c2740cdfd1a021d2e96";
 
   const fetchWeatherByCoords = async (lat: number, lon: number) => {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-    );
-    const data = await res.json();
-    setWeatherData(data);
+    const [currentRes, forecastRes] = await Promise.all([
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`),
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
+    ]);
+
+    const currentData = await currentRes.json();
+    const forecastData = await forecastRes.json();
+
+    setWeatherData(currentData);
+    setForecastData(forecastData.list);
     setLoading(false);
   };
 
   const fetchWeatherByCity = async (city: string) => {
     setLoading(true);
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-        city
-      )}&appid=${API_KEY}&units=metric`
-    );
-    const data = await res.json();
-    setWeatherData(data);
+    const [currentRes, forecastRes] = await Promise.all([
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`),
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`)
+    ]);
+
+    const currentData = await currentRes.json();
+    const forecastData = await forecastRes.json();
+
+    setWeatherData(currentData);
+    setForecastData(forecastData.list);
     setLoading(false);
   };
 
@@ -63,33 +73,86 @@ const WeatherPage: React.FC = () => {
   const { main, weather, wind, name } = weatherData;
   const iconUrl = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
 
+  
+  const renderForecast = () => {
+    if (!forecastData.length) return null;
+
+    if (forecastType === "hours") {
+      const next3 = forecastData.slice(0, 6); 
+      return(
+        <div id="bottomDiv">
+          {next3.map((f, i) => (
+            <div key={i} id="followingDataBox">
+              <div id="wholeInsBox">
+                <p style={{marginLeft:"13%"}}>
+                  {new Date(f.dt_txt).toLocaleTimeString([], 
+                  {hour: "2-digit", minute: "2-digit" })}</p>
+              <div id="insideData">
+                <div>
+                  <img  src={`https://openweathermap.org/img/wn/${f.weather[0].icon}@2x.png`}
+                  alt={f.weather[0].description} />
+                </div>
+                <div style={{marginTop: "5%"}}>
+                  <p>{Math.round(f.main.temp)}°C</p>
+                  <p>{f.weather[0].description}</p>
+                </div>
+              </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (forecastType === "days") {
+      const days = forecastData.filter((f) => f.dt_txt.includes("12:00:00")).slice(0, 6);
+return (
+  <div id="bottomDiv">
+    {days.map((d, i) => (
+      <div key={i} id="followingDataBox">
+        <div id="wholeInsBox">
+          <p>{new Date(d.dt_txt).toLocaleDateString()}</p>
+          <div id="insideData">
+            <div>
+              <img
+                src={`https://openweathermap.org/img/wn/${d.weather[0].icon}@2x.png`}
+                alt={d.weather[0].description}
+              />
+            </div>
+            <div style={{ marginTop: "5%" }}>
+              <p>{Math.round(d.main.temp)}°C</p>
+              <p>{d.weather[0].description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+    }
+  };
+
   return (
     <div className="mainCont">
       <div id="box">
         <div id="topDiv" style={{ textAlign: "center", marginBottom: "20px" }}>
-          <form onSubmit={handleSearch} style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <form
+            onSubmit={handleSearch}
+            style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "8px", marginLeft: "3%" }}
+          >
             <input
               type="text"
               placeholder="Search city..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ padding: "8px", fontSize: "16px", borderRadius: "5px", border: "1px solid #ccc" }}
+              style={{ padding: "3px", height:"60%", fontSize: "16px", borderRadius: "5px", border: "1px solid #ccc" }}
             />
-            <button
-              type="submit"
-              style={{
-                padding: "8px 12px",
-                fontSize: "16px",
-                borderRadius: "5px",
-                border: "none",
-                backgroundColor: "#0389ff",
-                color: "#fff",
-                cursor: "pointer"
-              }}
-            >
-              Search
-            </button>
+            <button id="searchBtn" type="submit">Search</button>
           </form>
+          <div id="topBtnsHolder">
+                <button onClick={() => setForecastType("hours")} id="theBtn">Next 3 Hours</button>
+                <button onClick={() => setForecastType("days")} id="theBtn">Next 3 Days</button>
+             </div>
         </div>
 
         <div id="middleDiv">
@@ -102,7 +165,6 @@ const WeatherPage: React.FC = () => {
               <img id="weathImg" src={iconUrl} alt={weather[0].description} />
             </div>
           </Card>
-
           <Card>
             <div>
               <p style={{ marginLeft: "17px", marginTop: "15px" }}>
@@ -116,7 +178,6 @@ const WeatherPage: React.FC = () => {
               </ul>
             </div>
           </Card>
-
           <Card>
             <div style={{ marginLeft: "15px" }}>
               <h3>
@@ -127,11 +188,12 @@ const WeatherPage: React.FC = () => {
                   id="imgCloth"
                 />
               </h3>
+              
             </div>
           </Card>
         </div>
-
-        <div id="bottomDiv"></div>
+          {renderForecast()}
+        
       </div>
     </div>
   );

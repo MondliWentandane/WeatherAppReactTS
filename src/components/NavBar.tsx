@@ -14,14 +14,11 @@ const NavBar: React.FC<NavBarProps> = () => {
             <h1 style={brandTextStyle}>WeatherApp</h1>
           </div>
         </div>
-
-
-
         
         <div style={navLinksStyle}>
-          <a href="#current" style={navLinkStyle}>Current</a>
-          <a href="#forecast" style={navLinkStyle}>Forecast</a>
-          <a href="#maps" style={navLinkStyle}>Maps</a>
+          <a href="current" style={navLinkStyle}>Current</a>
+          <a href="forecast" style={navLinkStyle}>Forecast</a>
+          <a href="maps" style={navLinkStyle}>Maps</a>
         </div>
       </div>
     </nav>
