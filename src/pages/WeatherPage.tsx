@@ -81,7 +81,7 @@ const WeatherPage: React.FC = () => {
       const next3 = forecastData.slice(0, 6); 
       return(
         <div id="bottomDiv">
-          {next3.map((f, i) => (
+          {next3.map((f, i) => (    
             <div key={i} id="followingDataBox">
               <div id="wholeInsBox">
                 <p style={{marginLeft:"13%"}}>
@@ -150,8 +150,8 @@ return (
             <button id="searchBtn" type="submit">Search</button>
           </form>
           <div id="topBtnsHolder">
-                <button onClick={() => setForecastType("hours")} id="theBtn">Next 3 Hours</button>
-                <button onClick={() => setForecastType("days")} id="theBtn">Next 3 Days</button>
+                <button onClick={() => setForecastType("hours")} id="theBtn">Hours</button>
+                <button onClick={() => setForecastType("days")} id="theBtn">Days</button>
              </div>
         </div>
 

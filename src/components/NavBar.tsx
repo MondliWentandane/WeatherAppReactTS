@@ -32,7 +32,7 @@ const navBarStyle: React.CSSProperties = {
   left: 0,
   right: 0,
   zIndex: 1000,
-  backgroundColor: '#4a5568',
+  backgroundColor: '#373ad3ff',
   borderBottom: '2px solid #4a5568',
   boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
   backdropFilter: 'blur(10px)',
@@ -65,12 +65,9 @@ const logoStyle: React.CSSProperties = {
 const brandTextStyle: React.CSSProperties = {
   fontSize: '24px',
   fontWeight: 'bold',
-  color: '#0068b3ff',
+  color: '#f1f1f1ff',
   margin: 0,
-  background: 'linear-gradient(135deg, #63b3ed, #90cdf4)',
   WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
 };
 
 

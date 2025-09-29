@@ -1,12 +1,17 @@
 /** == Here I will style my own created components =====**/
+body{
+  background-color: #000000ee;
+}
 
 .mainCont {
   height: 90vh;
   width: 100%;
-  background-color: #CBDCEB;
+  background-color: #000000ee;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif ;
+  color: white;
 }
 #box{
   width: 90%;
@@ -14,10 +19,11 @@
   display: flex;
   flex-direction: column;
   gap: 7px;
+  margin-top: 1.5%;
 }
 
 #topDiv{
-    background-color: #0389ff1f;
+    background-color: #035bff8f;
     width: 89%;
     height: 7%;
     border-radius: 20px;
@@ -36,7 +42,7 @@
   gap: 7px;
 
   #card{
-    background-color: #0389ff1f;
+    background-color: #035bff8f;
     width: 95%;
     height: 90%;
     border-radius: 20px;
@@ -72,7 +78,7 @@
 }
 
 #bottomDiv{
-  background-color: #0389ff28;
+  background-color: #035bff8f;
   width: 100%;
   height: 30%;
   border-radius: 20px;
@@ -83,25 +89,25 @@
 #topBtnsHolder{
   display: inline-flex;
   gap: 3%;
-  width: 18%;
+  width: 10%;
   height: 70%;
   margin-top: 0.9%;
 
 #theBtn{
-  background-color: #544e64ea;
+  background-color: #0389ffad;
   font-size: 16px;
   border-radius: 5px;
   border: snow;
   color: #fff;
   cursor: pointer;
   height: fit-content;
-  padding: 1% 3% 1% 3%;
+  padding: 3% 5% 3% 5%;
 }
 
 }
 
 #followingDataBox{
-  background-color: #4999df2a;
+  background-color: #035bff8f;
   font-size: 15px;
   width: 15%;
   height: 85%;
@@ -109,7 +115,7 @@
   margin-left: 1.5%;
   margin-top: 1%;
   border-radius: 20px;
-  box-shadow: 4px 4px 4px #4999df;
+  box-shadow: 4px 4px 4px #141d25;
 }
 #wholeInsBox{
   

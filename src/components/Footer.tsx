@@ -26,8 +26,8 @@ const Footer = () => {
 
 
 const footerStyle: React.CSSProperties = {
-  backgroundColor: '#A1C2BD',
-  color: '#4a5568',
+  backgroundColor: '#373ad3ff',
+  color: '#edeff3ff',
   width: '100%',
   position: "absolute",
   bottom: 1
@@ -47,9 +47,9 @@ const containerStyle: React.CSSProperties = {
 
 
 const bottomBarStyle: React.CSSProperties = {
-  backgroundColor: '#A1C2BD',
+  backgroundColor: '#373ad3ff',
   borderTop: '1px solid #4a5568',
-  paddingTop: '20px',
+  paddingTop: '5px',
   paddingBottom: '20px',
 };
 
@@ -63,7 +63,7 @@ const bottomContentStyle: React.CSSProperties = {
 
 const copyrightStyle: React.CSSProperties = {
   fontSize: '14px',
-  color: '#4a5568',
+  color: '#f7f8faff',
   margin: 0,
 };
 
@@ -73,7 +73,7 @@ const socialLinksStyle: React.CSSProperties = {
 };
 
 const bottomLinkStyle: React.CSSProperties = {
-  color: '#4a5568',
+  color: '#eff2f7ff',
   textDecoration: 'none',
   fontSize: '14px',
   transition: 'color 0.3s ease',
